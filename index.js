@@ -1,109 +1,76 @@
-let nombrePersona = prompt("Por favor ingresar su nombre.")
-
-if (nombrePersona =="" || nombrePersona == "." || nombrePersona == " "){
-    alert("No ingresaste tu nombre, por favor intentalo de nuevo");
-
-    nombrePersona = prompt("Por favor ingresar su nombre.")
-}
-else {
-    alert("Bienvenido/a" + " " + nombrePersona)
-}
-
-console.log(nombrePersona)
-
-const OPCION_SALIR = 4;
-const IVA = .19;
-let totalDeProducto = 100
-const ArrayDeProductos = [];
-class Producto {
-    constructor(nombre, precio, descripcion, categoria){
-        this.precio = precio;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.categoria = categoria
-    }
-}
-
-
-const collar1 = new Producto("Collar cuero", 40000, "Collar súper cómodo y con mucho estilo para tu peludito", "Collares");
-ArrayDeProductos.push(collar1);
-
-const collar2 = new Producto("Collar rastreador", 60000, "Collar con rastreador donde puedes ubicar a tu mascota.", "Collares");
-ArrayDeProductos.push(collar2);
-
-const placa1 = new Producto("Placa marcada en laser", 15000, "Placa con el nombre de tu mascota, tu nombre y número telefónico", "Placas");
-ArrayDeProductos.push(placa1);
-
-const placa2 = new Producto("Placa con codigo QR", 15000, "Placa con código QR con todos tus datos personales", "Placas");
-ArrayDeProductos.push(placa2);
-
-//console.log(ArrayDeProductos)
-
-
-const verCollares = () =>{
-    const filtrado = ArrayDeProductos.filter((el)=> el.categoria === 'Collares'); 
-    let mensajeAMostrar = '';
-    filtrado.forEach((el) =>{
-        mensajeAMostrar += "\nProducto: " + el.nombre + " " + "\nPrecio: " + el.precio
+document.addEventListener('DOMContentLoaded', () => {
+    const productos = [
+      { id: 1, nombre: 'Collar cuero', precio: 15 },
+      { id: 2, nombre: 'Collar GPS', precio: 16 },
+      { id: 3, nombre: 'Placa QR', precio: 10 },
+      { id: 4, nombre: 'Placa láser', precio: 12 }
+    ];
+  
+    const productosContainer = document.getElementById('productos-container');
+    const carritoContainer = document.getElementById('carrito-container');
+    const carritoTotal = document.getElementById('carrito-total');
+  
+    const carrito = [];
+  
+    // Función para agregar un producto al carrito
+    const agregarAlCarrito = (producto) => {
+      carrito.push(producto);
+      actualizarCarrito();
+    };
+  
+    // Función para actualizar el carrito
+    const actualizarCarrito = () => {
+      carritoContainer.innerHTML = '';
+  
+      carrito.forEach((producto) => {
+        const productoItem = document.createElement('div');
+        productoItem.classList.add('carrito-producto');
+  
+        const nombre = document.createElement('span');
+        nombre.textContent = producto.nombre;
+  
+        const precio = document.createElement('span');
+        precio.textContent = `$${producto.precio}`;
+  
+        productoItem.appendChild(nombre);
+        productoItem.appendChild(precio);
+  
+        carritoContainer.appendChild(productoItem);
+      });
+  
+      const total = carrito.reduce((accumulator, producto) => accumulator + producto.precio, 0);
+      carritoTotal.textContent = `$${total}`;
+    };
+  
+    productos.forEach((producto) => {
+      const productoItem = document.createElement('div');
+      productoItem.classList.add('producto');
+  
+      const img = document.createElement('img');
+      img.src = `imgc/${producto.id}.jpg`;
+      img.alt = producto.nombre;
+  
+      const info = document.createElement('div');
+      info.classList.add('producto-info');
+  
+      const nombre = document.createElement('h3');
+      nombre.textContent = producto.nombre;
+  
+      const precio = document.createElement('p');
+      precio.textContent = `Precio: $${producto.precio}`;
+  
+      const agregarCarrito = document.createElement('button');
+      agregarCarrito.textContent = 'Agregar al carrito';
+      agregarCarrito.addEventListener('click', () => agregarAlCarrito(producto));
+  
+      info.appendChild(nombre);
+      info.appendChild(precio);
+      info.appendChild(agregarCarrito);
+  
+      productoItem.appendChild(img);
+      productoItem.appendChild(info);
+  
+      productosContainer.appendChild(productoItem);
     });
-    alert(mensajeAMostrar);
-}
-
-const verPlacas = () =>{
-    const filtrado = ArrayDeProductos.filter((el)=> el.categoria === 'Placas'); 
-    let mensajeAMostrar = '';
-    filtrado.forEach((el) =>{
-        mensajeAMostrar += "\nProducto: " + el.nombre + " " + "\nPrecio: " + el.precio
-    });
-    alert(mensajeAMostrar);
-}
-
-
-
-const verProductos = () =>{
-    let opcion;
-    opcion = parseInt(prompt(nombrePersona + " " + "Elige la acción que deseas realizar, \n 1.Ver collares \n 2.Ver placas \n 3.Regresar a pagina anterior. \n 4.Salir"));
-    while(opcion !== OPCION_SALIR){
-        switch(opcion){
-            case 1: verCollares();
-                break;
-            case 2: verPlacas();
-                    break;
-            case 3: regresar();
-                    break;
-            case 4:
-                    break;
-            default:
-                alert("Acción no reconocida, intentalo de nuevo")
-        }
-        opcion = parseInt(prompt("Elige la opción deseada:, \n 1-Collares \n 2-Placas"))
-    }
-}
-
-const verTotal = (total) =>{
-    const resultado = IVA + totalDeProducto;
-    alert("El total de los productos más IVA es " + resultado)
-
-}
-
-
-let opcion = parseInt(prompt(nombrePersona + " " + "elige la acción que deseas realizar, \n 1.Ver nuestros productos \n 2.Ver el valor total del carrito de compras. \n 3.Comunicarte con servicio al cliente \n 4.Salir"));
-
-while(opcion != OPCION_SALIR){
-
-    switch(opcion){
-        case 1: verProductos();
-                break;
-        case 2: verTotal(totalDeProducto);
-                break;
-        case 3: servicioCliente();
-                break;
-        case 4:
-                break;
-        default:
-            alert("Acción no reconocida, intentalo de nuevo")
-    }
-    opcion = parseInt(prompt(nombrePersona + "Elige la accion que deseas realizar, \n 1.Ver productos \n 2.Ver el valor total del carrito de compras. \n 3.Servicio al cliente \n 4.Salir"));
-}
-
-alert("Gracias por su visita!")
+  });
+  

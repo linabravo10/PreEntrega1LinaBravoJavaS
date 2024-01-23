@@ -1,0 +1,56 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  h1, h2 {
+    color: #333;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  /* Estilos específicos para el catálogo de productos */
+  #productos-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .producto {
+    margin: 20px;
+    text-align: center;
+    max-width: 200px;
+  }
+  
+  .producto img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+  }
+  
+  .producto-info {
+    margin-top: 10px;
+  }
+  
+  /* Estilos específicos para el carrito de compras */
+  .carrito {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 20px;
+  }
+  
+  .carrito-producto {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+  
+  #carrito-total {
+    font-weight: bold;
+  }
+  
